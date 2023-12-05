@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const Concert = require("../models/Concert.model");
+const { isAuthenticated } = require("../middleware/jwt.middleware");
 
 const router = express.Router();
 const app = express()
@@ -17,7 +18,7 @@ router.get("/concerts", (req, res, next) => {
 });
 
 // POST /api/concerts
-router.post("/concerts", (req, res, next) => {
+router.post("/concerts", isAuthenticated, (req, res, next) => {
     const { title, artist, description, image, date, price } = req.body;
 
     const newConcert = {
@@ -57,7 +58,7 @@ router.get("/concerts/:concertId", (req, res, next) => {
 });
 
 // PUT /api/concerts/:concertId
-router.put("/concerts/:concertId", (req, res, next) => {
+router.put("/concerts/:concertId", isAuthenticated, (req, res, next) => {
     const { concertId } = req.params;
 
     const { title, artist, description, image, date, price } = req.body;
@@ -86,7 +87,7 @@ router.put("/concerts/:concertId", (req, res, next) => {
 });
 
 // DEL /api/concerts/:concertId
-router.delete("/concerts/:concertId", (req, res, next) => {
+router.delete("/concerts/:concertId", isAuthenticated, (req, res, next) => {
     const { concertId } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(concertId)) {

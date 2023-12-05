@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
-
 const Venue = require("../models/Venue.model");
+const { isAuthenticated } = require("../middleware/jwt.middleware");
+
 const app = express()
 
 
@@ -18,7 +19,7 @@ router.get("/venues", (req, res, next) => {
 
 // POST - Adds a new venue 
 
-router.post("/venues", (req, res, next) => {
+router.post("/venues", isAuthenticated, (req, res, next) => {
   const { name, location, description, capacity, image } = req.body;
 
   const newVenue = new Venue({ name, location, description, capacity, image });
@@ -54,7 +55,7 @@ router.get("/venues/:venueId", (req, res, next) => {
 
 // PUT - Edits the specified venue
 
-router.put("/venues/:venueId", (req, res, next) => {
+router.put("/venues/:venueId", isAuthenticated, (req, res, next) => {
     const { venueId } = req.params;
     const { name, location, description, capacity, image } = req.body;
   
@@ -82,7 +83,7 @@ router.put("/venues/:venueId", (req, res, next) => {
 
 // DELETE - Deletes the specified venue
 
-router.delete("/venues/:venueId", (req, res, next) => {
+router.delete("/venues/:venueId", isAuthenticated, (req, res, next) => {
     const { venueId } = req.params;
   
     if (!mongoose.Types.ObjectId.isValid(venueId)) {
