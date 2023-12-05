@@ -18,6 +18,10 @@ const userSchema = new Schema(
       type: String,
       required: [true, "Name is required."],
     },
+    imageUrl: {
+      type: String,
+      default: "https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png",
+  },
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`

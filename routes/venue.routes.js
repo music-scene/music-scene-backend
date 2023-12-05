@@ -25,7 +25,7 @@ router.post("/venues", isAuthenticated, (req, res, next) => {
   const newVenue = new Venue({ name, location, description, capacity, image });
 
   newVenue
-    .save()
+  
     .then((savedVenue) => res.status(201).json(savedVenue))
     .catch((error) => next({ ...error, message: `Error creating a new venue` }));
 
@@ -103,4 +103,5 @@ router.delete("/venues/:venueId", isAuthenticated, (req, res, next) => {
 
   });
 
+require("../error-handling")(app);
 module.exports = router;
