@@ -78,11 +78,12 @@ title, ref to artist?, ref to album?, lyrics
 
 ### User routes
 
-| HTTP verb | URL                    | Request body | Action                      |
-| --------- | ---------------------- | ------------ | --------------------------- |
-| GET       | `/api/user`            | (empty)      | Returns the specified user  |
-| PUT       | `/api/user/:userId`    | JSON         | Edits the specified user    |
-| DELETE    | `/api/user/:userId`    | (empty)      | Deletes the specified user  |
+| HTTP verb | URL                     | Request body | Action                      |
+| --------- | ----------------------- | ------------ | --------------------------- |
+| GET       | `/api/users`            | (empty)      | Returns all the user        |
+| GET       | `/api/users/:userId`    | (empty)      | Returns the specified user  |
+| PUT       | `/api/users/:userId`    | JSON         | Edits the specified user    |
+| DELETE    | `/api/users/:userId`    | (empty)      | Deletes the specified user  |
 
 (implement auth and ownership)
 
