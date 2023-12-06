@@ -25,7 +25,7 @@ const concertSchema = new Schema({
         required: true,
         min: 0,
     },
-    createdBy: {
+    author: {
         type: Schema.Types.ObjectId,
         ref: "User"
     }

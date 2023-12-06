@@ -20,7 +20,7 @@ router.get("/concerts", (req, res, next) => {
 
 // POST /api/concerts
 router.post("/concerts", isAuthenticated, (req, res, next) => {
-    const { title, artist, description, image, date, price, createdBy } = req.body;
+    const { title, artist, description, image, date, price, author } = req.body;
 
     const newConcert = {
         title,
@@ -29,7 +29,7 @@ router.post("/concerts", isAuthenticated, (req, res, next) => {
         image,
         date,
         price,
-        createdBy 
+        author 
     };
 
     Concert.create(newConcert)
@@ -51,7 +51,7 @@ router.get("/concerts/:concertId", (req, res, next) => {
     }
 
     Concert.findById(concertId)
-        .populate("createdBy")
+        .populate("author") // do we really need this?
         .then((response) => res.status(200).json(response))
         .catch((error) => {
             console.log("Error getting specified concert" + error);
@@ -64,7 +64,7 @@ router.get("/concerts/:concertId", (req, res, next) => {
 router.put("/concerts/:concertId", isAuthenticated, (req, res, next) => {
     const { concertId } = req.params;
 
-    const { title, artist, description, image, date, price, createdBy } = req.body;
+    const { title, artist, description, image, date, price } = req.body;
 
     const updatedConcert = {
         title,
@@ -72,8 +72,7 @@ router.put("/concerts/:concertId", isAuthenticated, (req, res, next) => {
         description,
         image,
         date,
-        price,
-        createdBy
+        price
     };
 
     if (!mongoose.Types.ObjectId.isValid(concertId)) {

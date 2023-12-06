@@ -30,7 +30,7 @@ const venueSchema = new Schema(
       default: "https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png",
       trim: true,
     },
-    createdBy: {
+    author: {
         type: Schema.Types.ObjectId,
         ref: "User"
     }
