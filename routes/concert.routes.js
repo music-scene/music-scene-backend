@@ -61,7 +61,7 @@ router.get("/concerts/:concertId", (req, res, next) => {
 });
 
 // PUT /api/concerts/:concertId
-router.put("/concerts/:concertId", isAuthenticated, (req, res, next) => {
+router.put("/concerts/edit/:concertId", isAuthenticated, (req, res, next) => {
     const { concertId } = req.params;
 
     const { title, artist, description, image, date, price } = req.body;

@@ -49,7 +49,7 @@ router.get("/venues/:venueId", (req, res, next) => {
 
 // PUT - Edits the specified venue
 
-router.put("/venues/:venueId", isAuthenticated, (req, res, next) => {
+router.put("/venues/edit/:venueId", isAuthenticated, (req, res, next) => {
     const { venueId } = req.params;
     const { name, location, description, capacity, image, createdBy } = req.body;
 
