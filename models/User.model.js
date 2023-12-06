@@ -20,7 +20,7 @@ const userSchema = new Schema(
     },
     imageUrl: {
       type: String,
-      default: "https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png",
+      default: "https://upload.wikimedia.org/wikipedia/en/archive/b/b1/20210811082249%21Portrait_placeholder.png",
   },
   },
   {

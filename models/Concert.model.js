@@ -25,6 +25,10 @@ const concertSchema = new Schema({
         required: true,
         min: 0,
     },
+    createdBy: {
+        type: Schema.Types.ObjectId,
+        ref: "User"
+    }
 });
 
 const Concert = model("Concert", concertSchema);

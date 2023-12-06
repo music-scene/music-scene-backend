@@ -25,12 +25,15 @@ const venueSchema = new Schema(
       required: [true, "Capacity is required."],
       min: 1,
     },
-    image: {
+    imageUrl: {
       type: String,
-      required: [true, "Image URL is required."],
+      default: "https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png",
       trim: true,
     },
-
+    createdBy: {
+        type: Schema.Types.ObjectId,
+        ref: "User"
+    }
   },
   {
     timestamps: true,

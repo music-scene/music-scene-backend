@@ -4,22 +4,23 @@ const Concert = require("../models/Concert.model");
 const { isAuthenticated } = require("../middleware/jwt.middleware");
 
 const router = express.Router();
-const app = express()
+const app = express();
 
 // GET /api/concerts
 router.get("/concerts", (req, res, next) => {
     Concert.find()
+        .populate("createdBy")
         .then((response) => res.status(200).json(response))
         .catch((error) => {
             console.log("Error getting all concerts" + error);
             //res.status(500).json({ message: "Error getting all concerts" });
-            next({...error, message: "Error getting all concerts"})
+            next({ ...error, message: "Error getting all concerts" });
         });
 });
 
 // POST /api/concerts
 router.post("/concerts", isAuthenticated, (req, res, next) => {
-    const { title, artist, description, image, date, price } = req.body;
+    const { title, artist, description, image, date, price, createdBy } = req.body;
 
     const newConcert = {
         title,
@@ -28,6 +29,7 @@ router.post("/concerts", isAuthenticated, (req, res, next) => {
         image,
         date,
         price,
+        createdBy 
     };
 
     Concert.create(newConcert)
@@ -35,7 +37,7 @@ router.post("/concerts", isAuthenticated, (req, res, next) => {
         .catch((error) => {
             console.log("Error creating a new concert" + error);
             //res.status(500).json({ message: "Error creating a new concert" });
-            next({...error, message: "Error creating a new concert"})
+            next({ ...error, message: "Error creating a new concert" });
         });
 });
 
@@ -49,11 +51,12 @@ router.get("/concerts/:concertId", (req, res, next) => {
     }
 
     Concert.findById(concertId)
+        .populate("createdBy")
         .then((response) => res.status(200).json(response))
         .catch((error) => {
             console.log("Error getting specified concert" + error);
             //res.status(500).json({ message: "Error getting specified concert" });
-            next({...error, message: "Error getting specified concert"})
+            next({ ...error, message: "Error getting specified concert" });
         });
 });
 
@@ -61,7 +64,7 @@ router.get("/concerts/:concertId", (req, res, next) => {
 router.put("/concerts/:concertId", isAuthenticated, (req, res, next) => {
     const { concertId } = req.params;
 
-    const { title, artist, description, image, date, price } = req.body;
+    const { title, artist, description, image, date, price, createdBy } = req.body;
 
     const updatedConcert = {
         title,
@@ -70,6 +73,7 @@ router.put("/concerts/:concertId", isAuthenticated, (req, res, next) => {
         image,
         date,
         price,
+        createdBy
     };
 
     if (!mongoose.Types.ObjectId.isValid(concertId)) {
@@ -82,7 +86,7 @@ router.put("/concerts/:concertId", isAuthenticated, (req, res, next) => {
         .catch((error) => {
             console.log("Error updating specified concert" + error);
             //res.status(500).json({ message: "Error updating specified concert" });
-            next({...error, message: "Error updating specified concert"})
+            next({ ...error, message: "Error updating specified concert" });
         });
 });
 
@@ -100,10 +104,10 @@ router.delete("/concerts/:concertId", isAuthenticated, (req, res, next) => {
         .catch((error) => {
             console.log("Error deleting specified concert" + error);
             //res.status(500).json({ message: "Error deleting specified concert" });
-            next({...error, message: "Error deleting specified concert"})
+            next({ ...error, message: "Error deleting specified concert" });
         });
 });
 
 require("../error-handling")(app);
 
-module.exports = router
+module.exports = router;
