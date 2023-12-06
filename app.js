@@ -2,6 +2,7 @@ require("dotenv").config();
 require("./db");
 
 const express = require("express");
+const cors = require('cors')
 const indexRoutes = require("./routes/index.routes");
 const authRoutes = require("./routes/auth.routes");
 const concertRoutes = require("./routes/concert.routes");
@@ -10,8 +11,16 @@ const userRoutes = require("./routes/user.routes");
 const { isAuthenticated } = require("./middleware/jwt.middleware");
 
 const app = express();
+app.use(cors())
 
 require("./config")(app);
+
+app.use(
+    cors({
+      // Add the URLs of allowed origins to this array
+      origin: ['http://localhost:5173']
+    })
+  );
 
 // 👇 Start handling routes here
 app.use("/api", indexRoutes);
