@@ -18,7 +18,7 @@ require("./config")(app);
 app.use(
     cors({
       // Add the URLs of allowed origins to this array
-      origin: ['http://localhost:5173']
+      origin: [process.env.ORIGIN]
     })
   );
 
