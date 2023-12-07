@@ -25,8 +25,8 @@ app.use(
 // 👇 Start handling routes here
 app.use("/api", indexRoutes);
 app.use("/auth", authRoutes);
-app.use("/api", isAuthenticated, concertRoutes);
-app.use("/api", isAuthenticated, venueRoutes);
+app.use("/api", concertRoutes);
+app.use("/api", venueRoutes);
 app.use("/api", isAuthenticated, userRoutes);
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes

@@ -10,7 +10,8 @@ const app = express();
 
 router.get("/venues", (req, res, next) => {
     Venue.find()
-        .populate("createdBy")
+        .populate({ path: "author", select: "_id" })
+        .populate({ path: "author", select: "name" })
         .then((venues) => res.json(venues))
         .catch((error) => next({ ...error, message: `Error getting all the venues` }));
 });
@@ -18,9 +19,9 @@ router.get("/venues", (req, res, next) => {
 // POST - Adds a new venue
 
 router.post("/venues", isAuthenticated, (req, res, next) => {
-    const { name, location, description, capacity, image, createdBy } = req.body;
+    const { name, location, description, capacity, image, author } = req.body;
 
-    const newVenue = new Venue({ name, location, description, capacity, image, createdBy });
+    const newVenue = new Venue({ name, location, description, capacity, image, author });
 
     Venue.create(newVenue)
         .then((savedVenue) => res.status(201).json(savedVenue))
@@ -37,7 +38,8 @@ router.get("/venues/:venueId", (req, res, next) => {
     }
 
     Venue.findById(venueId)
-        .populate("createdBy")
+        .populate({ path: "author", select: "_id" })
+        .populate({ path: "author", select: "name" })
         .then((venue) => {
             if (!venue) {
                 return res.status(404).json({ message: "Venue not found" });
@@ -51,7 +53,7 @@ router.get("/venues/:venueId", (req, res, next) => {
 
 router.put("/venues/:venueId", isAuthenticated, (req, res, next) => {
     const { venueId } = req.params;
-    const { name, location, description, capacity, image, createdBy } = req.body;
+    const { name, location, description, capacity, image, author } = req.body;
 
     if (!mongoose.Types.ObjectId.isValid(venueId)) {
         return res.status(400).json({ message: "Specified id isn't valid" });
@@ -60,7 +62,7 @@ router.put("/venues/:venueId", isAuthenticated, (req, res, next) => {
     Venue.findByIdAndUpdate(
         venueId,
 
-        { name, location, description, capacity, image, createdBy },
+        { name, location, description, capacity, image, author },
         { new: true }
     )
         .then((updatedVenue) => {
