@@ -22,13 +22,13 @@ router.get("/concerts", (req, res, next) => {
 
 // POST /api/concerts
 router.post("/concerts", isAuthenticated, (req, res, next) => {
-    const { title, artist, description, image, date, price, venue, author } = req.body;
+    const { title, artist, description, imageUrl, date, price, venue, author } = req.body;
 
     const newConcert = {
         title,
         artist,
         description,
-        image,
+        imageUrl,
         date,
         price,
         venue,
@@ -69,13 +69,13 @@ router.get("/concerts/:concertId", (req, res, next) => {
 router.put("/concerts/:concertId", isAuthenticated, (req, res, next) => {
     const { concertId } = req.params;
 
-    const { title, artist, description, image, date, price, venue } = req.body;
+    const { title, artist, description, imageUrl, date, price, venue } = req.body;
 
     const updatedConcert = {
         title,
         artist,
         description,
-        image,
+        imageUrl,
         date,
         price,
         venue,

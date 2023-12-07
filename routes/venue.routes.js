@@ -19,9 +19,9 @@ router.get("/venues", (req, res, next) => {
 // POST - Adds a new venue
 
 router.post("/venues", isAuthenticated, (req, res, next) => {
-    const { name, location, description, capacity, image, author } = req.body;
+    const { name, location, description, capacity, imageUrl, author } = req.body;
 
-    const newVenue = new Venue({ name, location, description, capacity, image, author });
+    const newVenue = new Venue({ name, location, description, capacity, imageUrl, author });
 
     Venue.create(newVenue)
         .then((savedVenue) => res.status(201).json(savedVenue))
@@ -53,7 +53,7 @@ router.get("/venues/:venueId", (req, res, next) => {
 
 router.put("/venues/:venueId", isAuthenticated, (req, res, next) => {
     const { venueId } = req.params;
-    const { name, location, description, capacity, image, author } = req.body;
+    const { name, location, description, capacity, imageUrl, author } = req.body;
 
     if (!mongoose.Types.ObjectId.isValid(venueId)) {
         return res.status(400).json({ message: "Specified id isn't valid" });
@@ -62,7 +62,7 @@ router.put("/venues/:venueId", isAuthenticated, (req, res, next) => {
     Venue.findByIdAndUpdate(
         venueId,
 
-        { name, location, description, capacity, image, author },
+        { name, location, description, capacity, imageUrl, author },
         { new: true }
     )
         .then((updatedVenue) => {
