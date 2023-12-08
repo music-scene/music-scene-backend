@@ -12,7 +12,7 @@ router.get("/venues", (req, res, next) => {
     Venue.find()
         .populate({ path: "author", select: "_id" })
         .populate({ path: "author", select: "name" })
-        .then((venues) => res.json(venues))
+        .then((venues) => res.status(200).json(venues))
         .catch((error) => next({ ...error, message: `Error getting all the venues` }));
 });
 

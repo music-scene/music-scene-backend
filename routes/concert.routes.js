@@ -24,6 +24,11 @@ router.get("/concerts", (req, res, next) => {
 router.post("/concerts", isAuthenticated, (req, res, next) => {
     const { title, artist, description, imageUrl, date, price, venue, author } = req.body;
 
+    if (venue === "" || venue === null ) {
+        res.status(400).json({ message: "Select a venue" });
+        return;
+      }
+
     const newConcert = {
         title,
         artist,

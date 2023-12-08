@@ -27,7 +27,8 @@ const concertSchema = new Schema({
     },
     venue: {
         type: Schema.Types.ObjectId,
-        ref: "Venue"
+        ref: "Venue",
+        required: true
     },
     author: {
         type: Schema.Types.ObjectId,
