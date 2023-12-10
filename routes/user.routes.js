@@ -8,7 +8,7 @@ const app = express();
 // GET - Returns all the users
 
 router.get("/users", (req, res, next) => {
-  User.find()
+  User.find().select('-password')
 
     .then((users) => res.json(users))
     .catch((error) => next({ ...error, message: "Error getting all users" }));
@@ -24,7 +24,7 @@ router.get("/users/:userId", (req, res, next) => {
 
   }
 
-  User.findById (userId)
+  User.findById(userId).select('-password')
 
     .then((user) => {
       if (!user) {
