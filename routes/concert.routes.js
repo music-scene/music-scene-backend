@@ -29,6 +29,9 @@ router.post("/concerts", isAuthenticated, (req, res, next) => {
         return;
       }
 
+    // name is unique
+    // find a way to check if exists and send a message back
+
     const newConcert = {
         title,
         artist,
@@ -75,6 +78,9 @@ router.put("/concerts/:concertId", isAuthenticated, (req, res, next) => {
     const { concertId } = req.params;
 
     const { title, artist, description, imageUrl, date, price, venue } = req.body;
+
+    // name is unique
+    // find a way to check if exists and send a message back
 
     const updatedConcert = {
         title,

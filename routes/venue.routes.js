@@ -21,7 +21,15 @@ router.get("/venues", (req, res, next) => {
 router.post("/venues", isAuthenticated, (req, res, next) => {
     const { name, location, description, capacity, imageUrl, author } = req.body;
 
-    const newVenue = new Venue({ name, location, description, capacity, imageUrl, author });
+    // name is unique
+    // find a way to check if exists and send a message back
+
+    if (capacity <= 0) {
+        res.status(400).json({ message: "Capacity has to be higher than 0" });
+        return;
+    }
+
+    const newVenue = { name, location, description, capacity, imageUrl, author };
 
     Venue.create(newVenue)
         .then((savedVenue) => res.status(201).json(savedVenue))
@@ -54,6 +62,9 @@ router.get("/venues/:venueId", (req, res, next) => {
 router.put("/venues/:venueId", isAuthenticated, (req, res, next) => {
     const { venueId } = req.params;
     const { name, location, description, capacity, imageUrl, author } = req.body;
+
+    // name is unique
+    // find a way to check if exists and send a message back
 
     if (!mongoose.Types.ObjectId.isValid(venueId)) {
         return res.status(400).json({ message: "Specified id isn't valid" });

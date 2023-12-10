@@ -4,6 +4,7 @@ const concertSchema = new Schema({
     title: {
         type: String,
         required: [true, "Title is required."],
+        unique: true
     },
     artist: {
         type: String, // Will change to ref when Artist model is added
