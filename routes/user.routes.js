@@ -42,7 +42,7 @@ router.get("/users/:userId", (req, res, next) => {
 
 router.put("/users/:userId", isAuthenticated, (req, res, next) => {
   const { userId } = req.params;
-  const { name, email, password, image } = req.body;
+  const { name, email, imageUrl } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(userId)) {
     return res.status(400).json({ message: "Id isn't valid" });
@@ -50,7 +50,7 @@ router.put("/users/:userId", isAuthenticated, (req, res, next) => {
 
   User.findByIdAndUpdate(
     userId,
-    { name, email, password, image },
+    { name, email, imageUrl },
     { new: true }
   )
     .then((updatedUser) => {
