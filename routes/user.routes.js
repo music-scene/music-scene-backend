@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
+const { isAuthenticated } = require("../middleware/jwt.middleware");
 
 const User = require("../models/User.model");
 const app = express();
@@ -39,7 +40,7 @@ router.get("/users/:userId", (req, res, next) => {
 
 // PUT - Edits the specified user
 
-router.put("/users/:userId", (req, res, next) => {
+router.put("/users/:userId", isAuthenticated, (req, res, next) => {
   const { userId } = req.params;
   const { name, email, password, image } = req.body;
 
@@ -65,7 +66,7 @@ router.put("/users/:userId", (req, res, next) => {
 
 // DELETE - Deletes the specified user
 
-router.delete("/users/:userId", (req, res, next) => {
+router.delete("/users/:userId", isAuthenticated, (req, res, next) => {
   const { userId } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(userId)) {
