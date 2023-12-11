@@ -24,10 +24,10 @@ router.get("/concerts", (req, res, next) => {
 router.post("/concerts", isAuthenticated, (req, res, next) => {
     const { title, artist, description, imageUrl, date, price, venue, author } = req.body;
 
-    if (venue === "" || venue === null ) {
+    if (venue === "" || venue === null) {
         res.status(400).json({ message: "Select a venue" });
         return;
-      }
+    }
 
     // name is unique
     // find a way to check if exists and send a message back
@@ -76,6 +76,7 @@ router.get("/concerts/:concertId", (req, res, next) => {
 // PUT /api/concerts/:concertId
 router.put("/concerts/:concertId", isAuthenticated, (req, res, next) => {
     const { concertId } = req.params;
+    const userId = req.payload._id;
 
     const { title, artist, description, imageUrl, date, price, venue } = req.body;
 
@@ -98,7 +99,12 @@ router.put("/concerts/:concertId", isAuthenticated, (req, res, next) => {
     }
 
     Concert.findByIdAndUpdate(concertId, updatedConcert, { new: true })
-        .then((response) => res.status(200).json(response))
+        .then((response) => {
+            if (response.author._id.toString() !== userId) {
+                return res.status(404).json({ message: "Unauthorized user" });
+            }
+            res.status(200).json(response);
+        })
         .catch((error) => {
             console.log("Error updating specified concert" + error);
             //res.status(500).json({ message: "Error updating specified concert" });
@@ -109,6 +115,7 @@ router.put("/concerts/:concertId", isAuthenticated, (req, res, next) => {
 // DEL /api/concerts/:concertId
 router.delete("/concerts/:concertId", isAuthenticated, (req, res, next) => {
     const { concertId } = req.params;
+    const userId = req.payload._id;
 
     if (!mongoose.Types.ObjectId.isValid(concertId)) {
         res.status(400).json({ message: "Specified id is not valid" });
@@ -116,7 +123,12 @@ router.delete("/concerts/:concertId", isAuthenticated, (req, res, next) => {
     }
 
     Concert.findByIdAndDelete(concertId)
-        .then(() => res.status(204).json({ message: `Concert with ID: ${concertId} was successfully deleted` }))
+        .then((response) => {
+            if (response.author._id.toString() !== userId) {
+                return res.status(404).json({ message: "Unauthorized user" });
+            }
+            res.status(204).json({ message: `Concert with ID: ${concertId} was successfully deleted` });
+        })
         .catch((error) => {
             console.log("Error deleting specified concert" + error);
             //res.status(500).json({ message: "Error deleting specified concert" });

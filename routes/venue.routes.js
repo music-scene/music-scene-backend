@@ -58,6 +58,7 @@ router.get("/venues/:venueId", (req, res, next) => {
 router.put("/venues/:venueId", isAuthenticated, (req, res, next) => {
     const { venueId } = req.params;
     const { name, location, description, capacity, imageUrl, author } = req.body;
+    const userId = req.payload._id;
 
     // name is unique
     // find a way to check if exists and send a message back
@@ -66,14 +67,14 @@ router.put("/venues/:venueId", isAuthenticated, (req, res, next) => {
         return res.status(400).json({ message: "Specified id isn't valid" });
     }
 
-    Venue.findByIdAndUpdate(
-        venueId,
-        { name, location, description, capacity, imageUrl, author: req.user._id },
-        { new: true }
-    )
+    Venue.findByIdAndUpdate(venueId, { name, location, description, capacity, imageUrl, author }, { new: true })
         .then((updatedVenue) => {
             if (!updatedVenue) {
                 return res.status(404).json({ message: "Venue not found" });
+            }
+
+            if (updatedVenue.author._id.toString() !== userId) {
+                return res.status(404).json({ message: "Unauthorized user" });
             }
 
             res.json(updatedVenue);
@@ -84,6 +85,7 @@ router.put("/venues/:venueId", isAuthenticated, (req, res, next) => {
 // DELETE - Deletes the specified venue
 router.delete("/venues/:venueId", isAuthenticated, (req, res, next) => {
     const { venueId } = req.params;
+    const userId = req.payload._id;
 
     if (!mongoose.Types.ObjectId.isValid(venueId)) {
         return res.status(400).json({ message: "Specified id is not valid" });
@@ -93,6 +95,10 @@ router.delete("/venues/:venueId", isAuthenticated, (req, res, next) => {
         .then((deletedVenue) => {
             if (!deletedVenue) {
                 return res.status(404).json({ message: "Venue not found" });
+            }
+
+            if (updatedVenue.author._id.toString() !== userId) {
+                return res.status(404).json({ message: "Unauthorized user" });
             }
             res.json({ message: "Venue deleted successfully" });
         })
