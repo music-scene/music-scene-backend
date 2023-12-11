@@ -17,7 +17,7 @@ router.get("/venues", (req, res, next) => {
 
 // POST - Adds a new venue
 router.post("/venues", isAuthenticated, (req, res, next) => {
-    const { name, location, description, capacity, imageUrl,author } = req.body;
+    const { name, location, description, capacity, imageUrl, author } = req.body;
 
     // name is unique
     // find a way to check if exists and send a message back
