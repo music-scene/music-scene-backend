@@ -57,12 +57,12 @@ router.put("/artists/:artistId", isAuthenticated, (req, res, next) => {
     const { artistId } = req.params;
     const userId = req.payload._id;
 
-    const { name, description, imageUrl, author } = req.body;
+    const { name, description, imageUrl } = req.body;
 
     // name is unique
     // find a way to check if exists and send a message back
 
-    const newArtist = { name, description, imageUrl, author };
+    const newArtist = { name, description, imageUrl };
 
     if (!mongoose.Types.ObjectId.isValid(artistId)) {
         res.status(400).json({ message: "Specified id is not valid" });
