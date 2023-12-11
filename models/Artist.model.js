@@ -14,6 +14,10 @@ const artistSchema = new Schema(
         imageUrl: {
             type: String,
             required: true
+        },
+        author: {
+            type: Schema.Types.ObjectId,
+            ref: "User"
         }
     }
 )
