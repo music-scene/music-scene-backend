@@ -9,6 +9,7 @@ const app = express();
 // GET /api/concerts
 router.get("/concerts", (req, res, next) => {
     Concert.find()
+        .populate("artist")
         .populate("venue")
         .populate({ path: "author", select: "_id" })
         .populate({ path: "author", select: "name" })
@@ -26,6 +27,11 @@ router.post("/concerts", isAuthenticated, (req, res, next) => {
 
     if (venue === "" || venue === null) {
         res.status(400).json({ message: "Select a venue" });
+        return;
+    }
+
+    if (artist === "" || artist === null) {
+        res.status(400).json({ message: "Select an artist" });
         return;
     }
 
@@ -62,6 +68,7 @@ router.get("/concerts/:concertId", (req, res, next) => {
     }
 
     Concert.findById(concertId)
+        .populate("artist")
         .populate("venue")
         .populate({ path: "author", select: "_id" })
         .populate({ path: "author", select: "name" })
