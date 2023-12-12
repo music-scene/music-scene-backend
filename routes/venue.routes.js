@@ -93,11 +93,11 @@ router.delete("/venues/:venueId", isAuthenticated, (req, res, next) => {
 
     Venue.findByIdAndDelete(venueId)
         .then((deletedVenue) => {
-            /* if (!deletedVenue) {
+            if (!deletedVenue) {
                 return res.status(404).json({ message: "Venue not found" });
-            } */
+            }
 
-            if (updatedVenue.author._id.toString() !== userId) {
+            if (deletedVenue.author._id.toString() !== userId) {
                 return res.status(404).json({ message: "Unauthorized user" });
             }
             res.json({ message: "Venue deleted successfully" });
