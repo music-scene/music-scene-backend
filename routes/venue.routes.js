@@ -102,7 +102,7 @@ router.delete("/venues/:venueId", isAuthenticated, (req, res, next) => {
             }
             res.json({ message: "Venue deleted successfully" });
         })
-        .catch((error) => next({ ...error, message: `Error deleting - specified venue` }));
+        .catch((error) => next({ ...error, message: `Error deleting - specified venue ` }));
 });
 
 require("../error-handling")(app);
