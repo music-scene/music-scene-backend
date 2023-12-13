@@ -6,10 +6,10 @@ const concertSchema = new Schema({
         required: [true, "Title is required."],
         unique: true
     },
-    artist: {
+    artist: [{
         type: Schema.Types.ObjectId, // Will change to ref when Artist model is added
         ref: "Artist"
-    },
+    }],
     description: {
         type: String,
     },
