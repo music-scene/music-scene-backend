@@ -11,6 +11,10 @@ const artistSchema = new Schema(
             type: String,
             required: true
         },
+        genre: [{
+            type: Schema.Types.ObjectId,
+            ref: "Genre"
+        }],
         imageUrl: {
             type: String,
             required: true

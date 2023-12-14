@@ -8,6 +8,7 @@ const app = express();
 
 router.get("/artists", (req, res, next) => {
     Artist.find()
+        .populate("genre")
         .populate({ path: "author", select: "_id" })
         .populate({ path: "author", select: "name" })
         .then((response) => {
@@ -21,9 +22,9 @@ router.get("/artists", (req, res, next) => {
 });
 
 router.post("/artists", (req, res, next) => {
-    const { name, description, imageUrl, author } = req.body;
+    const { name, description, genre, imageUrl, author } = req.body;
 
-    const newArtist = { name, description, imageUrl, author };
+    const newArtist = { name, description, genre, imageUrl, author };
 
     Artist.create(newArtist)
         .then((response) => res.status(201).json(response))
@@ -42,6 +43,7 @@ router.get("/artists/:artistId", (req, res, next) => {
     }
 
     Artist.findById(artistId)
+        .populate("genre")
         .populate({ path: "author", select: "_id" })
         .populate({ path: "author", select: "name" })
         .then((artist) => {
@@ -57,12 +59,12 @@ router.put("/artists/:artistId", isAuthenticated, (req, res, next) => {
     const { artistId } = req.params;
     const userId = req.payload._id;
 
-    const { name, description, imageUrl } = req.body;
+    const { name, description, genre, imageUrl } = req.body;
 
     // name is unique
     // find a way to check if exists and send a message back
 
-    const newArtist = { name, description, imageUrl };
+    const newArtist = { name, description, genre, imageUrl };
 
     if (!mongoose.Types.ObjectId.isValid(artistId)) {
         res.status(400).json({ message: "Specified id is not valid" });
