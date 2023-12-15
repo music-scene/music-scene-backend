@@ -5,7 +5,7 @@
 
 REST API for the MusicScene app
 
-- This repo implements the backend REST API built in MongoDB and Express. 
+- This repo implements the backend **REST API** built in **ExpressJS, MongoDB and Mongoose**. 
 
 - A repository with the frontend (React App) can be found here [here](https://github.com/music-scene/music-scene-frontend)
 
