@@ -24,6 +24,11 @@ router.get("/artists", (req, res, next) => {
 router.post("/artists", (req, res, next) => {
     const { name, description, genre, imageUrl, author } = req.body;
 
+    if (genre === "" || genre === null || genre.length === 0) {
+        res.status(400).json({ message: "Add or select a genre" });
+        return;
+    }
+
     const newArtist = { name, description, genre, imageUrl, author };
 
     Artist.create(newArtist)
@@ -60,6 +65,11 @@ router.put("/artists/:artistId", isAuthenticated, (req, res, next) => {
     const userId = req.payload._id;
 
     const { name, description, genre, imageUrl } = req.body;
+
+    if (genre === "" || genre === null || genre.length === 0) {
+        res.status(400).json({ message: "Select a genre" });
+        return;
+    }
 
     // name is unique
     // find a way to check if exists and send a message back

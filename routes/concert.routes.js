@@ -30,7 +30,7 @@ router.post("/concerts", isAuthenticated, (req, res, next) => {
         return;
     }
 
-    if (artist === "" || artist === null) {
+    if (artist === "" || artist === null || artist.length === 0) {
         res.status(400).json({ message: "Select an artist" });
         return;
     }
@@ -86,6 +86,16 @@ router.put("/concerts/:concertId", isAuthenticated, (req, res, next) => {
     const userId = req.payload._id;
 
     const { title, artist, description, imageUrl, date, price, venue } = req.body;
+
+    if (venue === "" || venue === null) {
+        res.status(400).json({ message: "Select a venue" });
+        return;
+    }
+
+    if (artist === "" || artist === null || artist.length === 0) {
+        res.status(400).json({ message: "Select an artist" });
+        return;
+    }
 
     // name is unique
     // find a way to check if exists and send a message back
