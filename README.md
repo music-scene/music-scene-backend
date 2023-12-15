@@ -102,4 +102,4 @@ npm run dev
 ## Demo
 
 
-A demo of the REST API can be found here: https://music-scene.adaptable.app/api/
+A demo of the REST API can be found [here](https://music-scene.adaptable.app/api/)
