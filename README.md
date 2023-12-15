@@ -1,56 +1,42 @@
-# MERN Web Application
-
-## MVP
-
-- Signup/login
-
-- Concerts with CRUD operations
-
-- Venues with CRUD operations
+# MusicScene REST API
 
 
-## Bonus
+## Description
 
-- Responsiveness
+REST API for the MusicScene app
 
-- Authentication and ownership
+- This repo implements the backend REST API built in MongoDB and Express. 
 
-- Search for concerts/venues
+- A repository with the frontend (React App) can be found here [here](https://github.com/music-scene/music-scene-frontend)
 
-- Search for artists/albums/songs
+## Instructions
 
-<br>
+To be able to run this on your computer, first clone the repo:
 
-## MODELS:
+```
+git clone <repo url>
+```
 
-### USER 
-email, name, password, image (bonus: [tickets]?)
+Create a .env file in your project folder and add the following environment variables:
+```
+PORT=5005
+ORIGIN=<location of your frontend app> (e.g: 'http://localhost:5173')
+TOKEN_SECRET=<copy paste the string in here> (e.g: 'thisisasecrettoken')
+```
 
-### CONCERT
-title, artist, description, image, date, ref venue, price --> (bonus: [tickets])
+Then run the following command to install all the required dependencies:
 
-### VENUE
-name, location, description, capacity, image
+```
+npm install
+```
+To run and test the application, the command is:
 
-## Bonus:
-
-### TICKETS
-title, artist or id (from CONCERT), description, type, price
-
-### ARTIST
-name, image, [albums], linkToSpotify, [genres], ref to concerts
-
-### ALBUM
-name, [songs], image, [genres], year
-
-### SONG
-title, ref to artist?, ref to album?, lyrics
-
-<hr>
+```
+npm run dev
+```
 
 ## REST API ENDPOINTS
 
-## Routes
 
 ### Concert routes
 
@@ -62,7 +48,6 @@ title, ref to artist?, ref to album?, lyrics
 | PUT       | `/api/concerts/:concertId` | JSON         | Edits the specified concert   |
 | DELETE    | `/api/concerts/:concertId` | (empty)      | Deletes the specified concert |
 
-(implement auth and ownership)
 
 ### Venue routes
 
@@ -74,18 +59,36 @@ title, ref to artist?, ref to album?, lyrics
 | PUT       | `/api/venues/:venueId` | JSON         | Edits the specified venue   |
 | DELETE    | `/api/venues/:venueId` | (empty)      | Deletes the specified venue |
 
-(implement auth and ownership)
+
+### Artist routes
+
+| HTTP verb | URL                      | Request body | Action                       |
+| --------- | ------------------------ | ------------ | ---------------------------- |
+| GET       | `/api/artists`           | (empty)      | Returns all the artists      |
+| POST      | `/api/artists`           | JSON         | Adds a new artist            |
+| GET       | `/api/artists/:artistId` | (empty)      | Returns the specified artist |
+| PUT       | `/api/artists/:artistId` | JSON         | Edits the specified artist   |
+| DELETE    | `/api/artists/:artistId` | (empty)      | Deletes the specified artist |
+
+
+### Genre routes
+
+| HTTP verb | URL                    | Request body | Action                      |
+| --------- | ---------------------- | ------------ | --------------------------- |
+| GET       | `/api/genres`          | (empty)      | Returns all the genres      |
+| GET       | `/api/genres/:genreId` | (empty)      | Returns the specified genre |
+| DEL       | `/api/users/:genreId`  | JSON         | Deletes the specified genre |
+
 
 ### User routes
 
 | HTTP verb | URL                     | Request body | Action                      |
 | --------- | ----------------------- | ------------ | --------------------------- |
-| GET       | `/api/users`            | (empty)      | Returns all the user        |
+| GET       | `/api/users`            | (empty)      | Returns all the users       |
 | GET       | `/api/users/:userId`    | (empty)      | Returns the specified user  |
 | PUT       | `/api/users/:userId`    | JSON         | Edits the specified user    |
 | DELETE    | `/api/users/:userId`    | (empty)      | Deletes the specified user  |
 
-(implement auth and ownership)
 
 ### Auth routes
 
@@ -96,3 +99,7 @@ title, ref to artist?, ref to album?, lyrics
 | GET       | `/auth/verify` | Authorization: Bearer \< JWT \> | --                        |
 
 
+## Demo
+
+
+A demo of the REST API can be found here: https://music-scene.adaptable.app/api/
